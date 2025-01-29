@@ -1,0 +1,35 @@
+# Node modules
+/node_modules/
+*/*/node_modules/
+
+# Vite build output
+frontend/dist/
+
+# Log files
+*.log
+
+# Dependency directories
+/*/*/.pnp/
+/*//.pnp.js
+
+# Test coverage
+/*/coverage/
+
+#Environment files
+.env
+.env.local
+.env.*.local
+
+# VSCode settings
+.vscode/
+
+# macOS files
+.DS_Store
+
+# Windows files
+Thumbs.db
+
+# npm and yarn lock files (optional, depending on your preference)
+package-lock.json
+/*/package-lock.json
+yarn.lock
