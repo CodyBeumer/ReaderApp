@@ -1,6 +1,4 @@
 import express from "express";
-import mongoose from "mongoose";
-import List from '../models/list.model.js';
 import { 
     getListsAsync, 
     getListAsync,
@@ -12,7 +10,7 @@ import {
 const router = express.Router();
 
 //lists
-router.get('/api/lists', getListsAsync);
+router.get('/', getListsAsync);
 
 router.get('/:id', getListAsync);
 

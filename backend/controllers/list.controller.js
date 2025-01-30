@@ -1,3 +1,6 @@
+import List from '../models/list.model.js'
+import mongoose from 'mongoose';
+
 export const getListsAsync = async (req, res) => {
     //TODO: Implement pagination and filtering
     try {
@@ -27,6 +30,8 @@ export const getListAsync = async (req, res) => {
 
 export const postListAsync = async (req, res) => {
     const list = req.body;
+
+    console.log('POST /api/lists called')
 
     //make sure required fields are filled out
     if (!list.listName) {
