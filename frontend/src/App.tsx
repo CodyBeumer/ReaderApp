@@ -2,7 +2,8 @@ import { Box } from "@chakra-ui/react"
 import { Route, Routes } from "react-router"
 import HomePage from "./pages/HomePage"
 import Navbar from "./components/Navbar"
-import ListsPage from "./pages/ListsPage"
+import ReadingListsPage from "./pages/ReadingLists/ReadingListsPage"
+import ReadingListDetailsPage from "./pages/ReadingLists/ReadingListDetailsPage"
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />}/>
-          <Route path='/lists' element={<ListsPage />} />
+          <Route path='/reading-lists' element={<ReadingListsPage />} />
+          <Route path='/reading-lists/:id' element={<ReadingListDetailsPage />} />
         </Routes>
       </Box>
   )

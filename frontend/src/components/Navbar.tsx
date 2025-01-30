@@ -28,7 +28,7 @@ function Navbar({}: Props) {
                 >
                     <Link to={"/"}>ReaderApp</Link>
                 </Text>
-                <Link to={"lists"}>Reading Lists</Link>
+                <Link to={"reading-lists"}>Reading Lists</Link>
             </HStack>
             
 

@@ -1,7 +1,8 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
-import { Stack, Grid, CardFooter, HStack, Box, Button, Container, Flex, Heading, Card, CardBody, Text, Image, GridItem} from '@chakra-ui/react'
+import { Stack, Grid, CardFooter, HStack, Box, Button, Container, Heading, Card, CardBody, Text, Image, GridItem} from '@chakra-ui/react'
 import axios from 'axios';
+import { useParams, Link } from 'react-router';
 
 type List = {
     _id: string,
@@ -16,8 +17,8 @@ type Response = {
 
 type Props = {}
 
-function ListsPage({}: Props) {
-    const [lists, setLists] = useState<List[]>([])
+function ReadingListsPage({}: Props) {
+    const [lists, setLists] = useState<List[]>([]);
     useEffect(() => {
         const getData = async () => {
             const response = await axios.get<Response>('http://localhost:5000/api/lists');
@@ -61,9 +62,7 @@ function ListsPage({}: Props) {
                                 </CardBody>
 
                                 <CardFooter>
-                                <Button variant='solid' colorScheme='blue'>
-                                    View List
-                                </Button>
+                                    <Link to={`${list._id}`}>Open</Link>
                                 </CardFooter>
                             </Stack>
                         </Card>
@@ -76,4 +75,4 @@ function ListsPage({}: Props) {
   )
 }
 
-export default ListsPage
+export default ReadingListsPage
