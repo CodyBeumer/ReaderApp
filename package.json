@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon backend/server.js"
+    "start": "node backend/server",
+    "server": "nodemon backend/server.js",
+    "client": "cd frontend && vite",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "type": "module",
   "keywords": [],
@@ -17,6 +20,8 @@
     "mongoose": "^8.9.5"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "concurrently": "^9.1.2",
+    "nodemon": "^3.1.9",
+    "vite": "^6.0.11"
   }
 }
