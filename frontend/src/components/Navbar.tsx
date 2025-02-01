@@ -1,4 +1,3 @@
-import React from 'react'
 import { Container, Flex, Text, HStack, Button} from '@chakra-ui/react'
 import { Link } from 'react-router'
 import { useColorMode } from '@chakra-ui/react'

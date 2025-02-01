@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router';
-import { Input } from '@chakra-ui/react';
-import { Box } from '@chakra-ui/react';
+import { Input, Button } from '@chakra-ui/react';
+import { useNavigate } from 'react-router';
 
 type Props = {
 
 }
 
 type ListDetails = {
+    _id: string | undefined,
     listName: string
 }
 
@@ -18,62 +19,62 @@ type ListDetailsResponse = {
     data: ListDetails
 }
 
-type OpenLibraryResponse = {
-    docs: OpenLibraryDoc[]
-}
-
-type OpenLibraryDoc = {
-    author_name: string[],
-    first_publish_year: number,
-    key: string,
-    title: string
-}
-
 function ReadingListDetailsPage({}: Props) {
     const { id } = useParams();
-    const [listDetails, setListDetails] = useState<ListDetails>();
-    const [search, setSearch] = useState<string>('');
-    const [searchResults, setSearchResults] = useState<OpenLibraryDoc[]>([]);
+    const [state, setState] = useState<ListDetails>({
+        _id: id, //default id to route param value
+        listName: ""
+    });
+    const navigate = useNavigate();
+
+    async function handleSaveButtonClick() {
+        if (state._id === 'new') {
+            await createListAndNavigate();
+        } else {
+            await updateList();
+        }
+    }
+
+    async function createListAndNavigate() {
+        return await axios.post('http://localhost:5000/api/lists', {
+            listName: state.listName
+        }).then(function (result) {
+            //navigate to list on successful save
+            navigate(`/reading-lists/${result.data.data._id}`, { replace: true });
+        });
+    }
+
+    async function updateList() {
+        return await axios.patch(`http://localhost:5000/api/lists/${state._id}`, state).then(function (result) {
+            console.log(result.data);
+            setState(result.data.data);
+        });
+    }
 
     useEffect(() => {
         const getData = async () => {
             const response = await axios.get<ListDetailsResponse>(`http://localhost:5000/api/lists/${id}`);
-            console.log('Response data: ', response.data);  // Log the entire response object
-            setListDetails(response.data.data); //may need to rewrite controllers
+            setState(response.data.data); //may need to rewrite controllers
         }
 
-        getData();
+        if (state._id != 'new') {
+            getData();
+        }
     }, []);
-
-    useEffect(() => {
-        const searchBooks = async () => {
-            const response = await axios.get(`https://openlibrary.org/search.json?title=${search}&fields=title,author_name,first_publish_year,key&limit=5`);
-
-            setSearchResults(response.data.docs)
-        }
-
-        if (!!search) {
-            searchBooks();
-        } else {
-            setSearchResults([])
-        }
-    }, [search])
   
     return (
     <>
-    {listDetails?.listName}
-    <Input placeholder='Search Title / Author / ISBN' onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)} />
-
-    <ul>
-        {
-            !!search && !!searchResults ? 
-                searchResults.map((item) => {
-                    return (
-                        <li key={item.key}>{item.title}</li>
-                    )
-                }) : <></>
-        }
-    </ul>
+        <Input 
+            placeholder='List Name' 
+            value={state.listName} 
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
+                setState(prevState => ({ 
+                    ...prevState, 
+                    listName: e.target.value
+                })) 
+                }
+            />
+        <Button onClick={handleSaveButtonClick}>Save</Button>
     </>
   )
 }

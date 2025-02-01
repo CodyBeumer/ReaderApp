@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node backend/server",
-    "server": "nodemon backend/server.js",
-    "client": "cd frontend && vite",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "nodemon backend/server.js",
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
+    "start": "node backend/server.js"
   },
   "type": "module",
   "keywords": [],
@@ -17,11 +16,10 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "mongoose": "^8.9.5"
+    "mongoose": "^8.9.5",
+    "path": "^0.12.7"
   },
   "devDependencies": {
-    "concurrently": "^9.1.2",
-    "nodemon": "^3.1.9",
-    "vite": "^6.0.11"
+    "nodemon": "^3.1.9"
   }
 }

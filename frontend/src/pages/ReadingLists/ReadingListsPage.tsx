@@ -1,8 +1,7 @@
-import React from 'react'
 import { useEffect, useState } from 'react';
-import { Stack, Grid, CardFooter, HStack, Box, Button, Container, Heading, Card, CardBody, Text, Image, GridItem} from '@chakra-ui/react'
+import { Box, Button, Container } from '@chakra-ui/react'
 import axios from 'axios';
-import { useParams, Link } from 'react-router';
+import { useNavigate } from 'react-router';
 
 type List = {
     _id: string,
@@ -19,6 +18,8 @@ type Props = {}
 
 function ReadingListsPage({}: Props) {
     const [lists, setLists] = useState<List[]>([]);
+    const navigate = useNavigate();
+
     useEffect(() => {
         const getData = async () => {
             const response = await axios.get<Response>('http://localhost:5000/api/lists');
@@ -29,50 +30,37 @@ function ReadingListsPage({}: Props) {
         getData();
     }, []);
 
-    useEffect(() => {
-        console.log('Lists: ', lists);
-    }, [lists]); // This will log whenever 'lists' state changes.
-
-  return (
-    <>
-    <Container marginX={"auto"} minW={"70%"}>
-        <Box marginY={5}>
-            <Button>New List +</Button> 
-        </Box>
-        <Grid templateColumns='repeat(2, 1fr)' gap={6}>
-            {lists.map((list) => {
-                return (
-                    <GridItem key={list._id} w={"100%"}>
-                        <Card
-                            direction={{ base: 'column', sm: 'row' }}
-                            overflow='hidden'
-                            variant='outline'
-                        >
-                            <Image
-                                objectFit='cover'
-                                h={"300px"}
-                                w={"200px"}
-                                src='https://i.thriftbooks.com/api/imagehandler/m/67DE77D7454F547B6E089C6ED609ACD21A8E3991.jpeg'
-                                alt='Caffe Latte'
-                            />
-
-                            <Stack>
-                                <CardBody>
-                                <Heading size='md'>{list.listName}</Heading>
-                                </CardBody>
-
-                                <CardFooter>
-                                    <Link to={`${list._id}`}>Open</Link>
-                                </CardFooter>
-                            </Stack>
-                        </Card>
-                    </GridItem>
-                )
-            })}
-        </Grid>
-    </Container>
-    </>
-  )
+    return (
+        <>
+        <Container marginX={"auto"} minW={"70%"}>
+            <Box marginY={5}>
+                <a href='/reading-lists/new'>
+                    <Button>New List +</Button> 
+                </a>
+            </Box>
+            <table>
+                <thead>
+                    <tr>
+                        <th>List Name</th>
+                        <th>Books</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {lists.map((item) => {
+                        return (
+                            <tr key={item._id}>
+                                <td><a href={`/reading-lists/${item._id}`}>{item.listName}</a></td>
+                                <td>0</td>
+                                <td><Button onClick={() => { navigate(`/reading-lists/${item._id}`)}}>Open</Button></td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
+        </Container>
+        </>
+    )
 }
 
 export default ReadingListsPage
