@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { connectDB } from './config/db.js';
+import { connectDB } from './config/mongo.config.js';
 import listRoutes from './routes/list.route.js';
 import cors from 'cors'
 import path from 'path';

@@ -19,10 +19,11 @@ type Props = {}
 function ReadingListsPage({}: Props) {
     const [lists, setLists] = useState<List[]>([]);
     const navigate = useNavigate();
+    const VITE_API_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         const getData = async () => {
-            const response = await axios.get<Response>('http://localhost:5000/api/lists');
+            const response = await axios.get<Response>(`${VITE_API_URL}/api/lists`);
             console.log('Response data: ', response.data);  // Log the entire response object
             setLists(response.data.data); //may need to rewrite controllers
         }

@@ -26,6 +26,7 @@ function ReadingListDetailsPage({}: Props) {
         listName: ""
     });
     const navigate = useNavigate();
+    const VITE_API_URL = import.meta.env.VITE_API_URL;
 
     async function handleSaveButtonClick() {
         if (state._id === 'new') {
@@ -36,7 +37,7 @@ function ReadingListDetailsPage({}: Props) {
     }
 
     async function createListAndNavigate() {
-        return await axios.post('http://localhost:5000/api/lists', {
+        return await axios.post(`${VITE_API_URL}/api/lists`, {
             listName: state.listName
         }).then(function (result) {
             //navigate to list on successful save
@@ -45,7 +46,7 @@ function ReadingListDetailsPage({}: Props) {
     }
 
     async function updateList() {
-        return await axios.patch(`http://localhost:5000/api/lists/${state._id}`, state).then(function (result) {
+        return await axios.patch(`${VITE_API_URL}/api/lists/${state._id}`, state).then(function (result) {
             console.log(result.data);
             setState(result.data.data);
         });
@@ -53,7 +54,7 @@ function ReadingListDetailsPage({}: Props) {
 
     useEffect(() => {
         const getData = async () => {
-            const response = await axios.get<ListDetailsResponse>(`http://localhost:5000/api/lists/${id}`);
+            const response = await axios.get<ListDetailsResponse>(`${VITE_API_URL}/api/lists/${id}`);
             setState(response.data.data); //may need to rewrite controllers
         }
 

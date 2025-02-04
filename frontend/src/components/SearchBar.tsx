@@ -16,7 +16,7 @@ type OpenLibraryDoc = {
     title: string
 }
 
-function SearchBar({}: Props) {
+function Searchbar({}: Props) {
     const [search, setSearch] = useState<string>('');
     const [searchResults, setSearchResults] = useState<OpenLibraryDoc[]>([]);
     
@@ -51,4 +51,4 @@ function SearchBar({}: Props) {
     )
 }
 
-export default SearchBar
+export default Searchbar
