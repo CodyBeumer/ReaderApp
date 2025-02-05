@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router';
-import { Input, Button } from '@chakra-ui/react';
+import { InputGroup, Button, Form } from 'react-bootstrap';
+import { Input } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 
 type Props = {
@@ -65,16 +66,20 @@ function ReadingListDetailsPage({}: Props) {
   
     return (
     <>
-        <Input 
-            placeholder='List Name' 
-            value={state.listName} 
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
-                setState(prevState => ({ 
-                    ...prevState, 
-                    listName: e.target.value
-                })) 
+        <InputGroup>
+            <InputGroup.Text>List Name</InputGroup.Text>
+            <Form.Control 
+                placeholder='List Name'
+                aria-label="List Name"
+                value={state.listName}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
+                    setState(prevState => ({ 
+                        ...prevState, 
+                        listName: e.target.value
+                    })) 
                 }
             />
+        </InputGroup>
         <Button onClick={handleSaveButtonClick}>Save</Button>
     </>
   )

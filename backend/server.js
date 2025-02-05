@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import { connectDB } from './config/mongo.config.js';
 import listRoutes from './routes/list.route.js';
+import openLibraryRoutes from './routes/openlibrary.route.js'
 import cors from 'cors'
 import path from 'path';
 
@@ -14,7 +15,8 @@ const __dirname = path.resolve();
 
 app.use(express.json());
 app.use(cors({}));
-app.use("/api/lists", listRoutes)
+app.use("/api/lists", listRoutes);
+app.use("/api/openlibrary", openLibraryRoutes);
 
 app.get('/api/debug', (req, res) => {
     res.send('Diagnostics Information');
